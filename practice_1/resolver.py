@@ -1,10 +1,12 @@
-﻿import socket, struct
-def ip2long(ip):
+﻿def ip2long(ip):
     """
     Convert an IP string to long
     """
-    packedIP = socket.inet_aton(ip)
-    return struct.unpack("!L", packedIP)[0]
+    try:
+      packedIP = socket.inet_aton(ip)
+      return 1
+    except socket.error:
+      print ""
 def ipEnterSafe(str):
   ip = ""
   while not ip2long(ip):
@@ -23,7 +25,8 @@ for key in d:
 host = input('Enter a host name: ')
 ip = ipEnterSafe('Enter a ip ')
 f = open(fname, 'a')
-f.write(line + '\n')
+if not d.has_key(host):
+ f.write(line + '\n')
 f.close()
 host = input('Enter a host to find ip: ')
 print d.get(host)
